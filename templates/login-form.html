@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content%}
+<div class="blog-header">
+  <h2>Login</h2>
+</div>
+<div class="row login-form">
+  <form method="post">
+    <div class="form-group">
+      <label for="usr">Username:</label>
+      <input type="text" class="form-control" name="username" placeholder="username" value="{{username}}">
+    </div><br>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" name="password" placeholder="password" value="">
+    </div><br>
+    <div class="err_form">
+      {{error}}
+    </div><br>
+    <input type="submit">
+  </form>
+</div>
+
+{% endblock %}
+
+
+
+<!-- <!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Login</title>
+    <style type="text/css">
+      .label {text-align: right}
+      .error {color: red}
+    </style>
+
+  </head>
+
+  <body>
+    <h2>Login</h2>
+    <form method="post">
+      <table>
+        <tr>
+          <td class="label">
+            Username
+          </td>
+          <td>
+            <input type="text" name="username" value="{{username}}">
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">
+            Password
+          </td>
+          <td>
+            <input type="password" name="password" value="">
+          </td>
+        </tr>
+      </table>
+
+      <div class="error">
+        {{error}}
+      </div>
+
+      <input type="submit">
+    </form>
+  </body>
+
+</html>
+ -->

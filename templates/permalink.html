@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+        	<a class="edit-button btn btn-danger pull-right" href="/blog/edit/{{post.key().id()}}">Edit Post</a>
+        	<br>
+        	<a class="delete-button btn btn-danger pull-right" href="/blog/delete/{{post.key().id()}}">Delete Post</a>
+        </div>
+        
+    </div>
+ <div class="row">
+	{{post.render() | safe}}
+</div>
+<br>
+<div class="row">
+<a class="like-button" href="/blog/like/{{post.key().id()}}">Like Post {{numLikes}}</a>
+</div>
+<div class="row">
+	<a class="like-button" href="/blog/comment/{{post.key().id()}}">Comment</a>
+</div>
+<div class="error">
+{{error}}
+</div>
+
+<!-- <div>
+{% for comment in comments%}
+		<p>comment.comment</p>
+	{% endfor%}	
+</div>
+ -->
+
+	<!-- {% for comment in comments%}
+		<p>comment.comment</p>
+	{% endfor%}
+ -->
+
+
+
+<!-- <div>
+
+	<a class="delete-button" href="/blog/delete/{{post.key().id()}}">Delete Post</a>
+	<a class="edit-button" href="/blog/edit/{{post.key().id()}}">Edit Post</a>
+	<form method="post">
+	<button type="submit" id="like" name="like" value="btnLike">Like</button>
+	<div>
+	<input type='text' id='comment' name='comment' value="">
+	<button type="submit" id="comment">Comment</button>
+	</div>
+	<div>
+		{{comments}}
+	</div>
+	</form>
+</div>
+<br>
+{{post.render() | safe}}
+<div class='permsn_error'>
+	{{permission_denied}}
+</div>
+<div>
+	{{liked_msg}}
+</div>
+
+<div>
+		{{numLikes}}
+</div>
+
+<div>
+	{{no_login}}
+</div>
+
+<div>
+	{{del_prmsn}}
+</div>
+
+<div>
+	{{err_msg}}
+</div> -->
+<!-- <div>
+  {% for comment in comments %}
+  	<p>{{comment.comment}}
+  {%endfor%}
+ </p></div> -->
+{% endblock %}
