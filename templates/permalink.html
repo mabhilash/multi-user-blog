@@ -1,84 +1,62 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-12">
-        	<a class="edit-button btn btn-danger pull-right" href="/blog/edit/{{post.key().id()}}">Edit Post</a>
-        	<br>
-        	<a class="delete-button btn btn-danger pull-right" href="/blog/delete/{{post.key().id()}}">Delete Post</a>
-        </div>
-        
+
+<!-- <div class="row">
+    <div class="col-md-12">
+       	<a class="edit-button btn btn-primary pull-right" href="/blog/edit/{{post.key().id()}}">Edit Post</a>
+       	<a class="delete-button btn btn-danger pull-right" href="/blog/delete/{{post.key().id()}}">Delete Post</a>
     </div>
- <div class="row">
+</div> -->
+<div class="error col-md-12">
+	{{error}}
+</div>
+
+<div class="row">
 	{{post.render() | safe}}
 </div>
-<br>
+<div><br></div>
+
 <div class="row">
-<a class="like-button" href="/blog/like/{{post.key().id()}}">Like Post {{numLikes}}</a>
+	{% if numLikes > 0 %}
+		<a class="like-button btn btn-primary" href="/blog/like/{{post.key().id()}}">Like Post {{numLikes}}</a>
+	{% else %}
+		<a class="like-button btn btn-primary" href="/blog/like/{{post.key().id()}}">Like Post</a>
+	{%endif%}
+	<a class="edit-button btn btn-primary " href="/blog/edit/{{post.key().id()}}">Edit Post</a>
+ 	<a class="delete-button btn btn-danger " href="/blog/delete/{{post.key().id()}}">Delete Post</a>
 </div>
+<div><br></div>
 <div class="row">
-	<a class="like-button" href="/blog/comment/{{post.key().id()}}">Comment</a>
-</div>
-<div class="error">
-{{error}}
-</div>
-
-<!-- <div>
-{% for comment in comments%}
-		<p>comment.comment</p>
-	{% endfor%}	
-</div>
- -->
-
-	<!-- {% for comment in comments%}
-		<p>comment.comment</p>
-	{% endfor%}
- -->
-
-
-
-<!-- <div>
-
-	<a class="delete-button" href="/blog/delete/{{post.key().id()}}">Delete Post</a>
-	<a class="edit-button" href="/blog/edit/{{post.key().id()}}">Edit Post</a>
 	<form method="post">
-	<button type="submit" id="like" name="like" value="btnLike">Like</button>
-	<div>
-	<input type='text' id='comment' name='comment' value="">
-	<button type="submit" id="comment">Comment</button>
-	</div>
-	<div>
-		{{comments}}
-	</div>
+		<div class="form-group">
+  			<label for="comment">Comment:</label>
+  			<textarea class="form-control" rows="5" name="comment"></textarea><br>
+  			<input type="submit" class="btn btn-info">
+		</div>
 	</form>
-</div>
-<br>
-{{post.render() | safe}}
-<div class='permsn_error'>
-	{{permission_denied}}
-</div>
-<div>
-	{{liked_msg}}
+	
 </div>
 
-<div>
-		{{numLikes}}
+<div class="row">
+	
+		{% for comment in comments %}
+		<div><br></div>
+		<div class="comment-section">
+			<div class="col-md-8">
+				{{comment.comment}}<br>
+				(Comment by {{comment.user_name}})
+				<div><br></div>
+			</div>
+			<div class="col-md-4 ">
+				<a href="/blog/deletecomment/{{post.key().id()}}/{{comment.key().id()}}"><span class="glyphicon glyphicon-trash"></span></a>
+				<a href="/blog/editcomment/{{post.key().id()}}/{{comment.key().id()}}"><span class="glyphicon glyphicon-pencil"></span></a>
+			</div>
+		</div>
+		<div><br></div>
+		{% endfor %}
+	
 </div>
 
-<div>
-	{{no_login}}
-</div>
 
-<div>
-	{{del_prmsn}}
-</div>
-
-<div>
-	{{err_msg}}
-</div> -->
-<!-- <div>
-  {% for comment in comments %}
-  	<p>{{comment.comment}}
-  {%endfor%}
- </p></div> -->
 {% endblock %}

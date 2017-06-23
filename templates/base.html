@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="/static/bootstrap.css">
-  <link type="text/css" rel="stylesheet" href="/static/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.css">
+  <link type="text/css" rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="/static/main.css" />
@@ -23,7 +23,7 @@
     <div class="row">
       <div class="login-area">
         {% if user %}
-      Welcome {{user.name.capitalize()}} (<a class="login-link" href="/logout">Logout</a>)
+      <h4>Welcome {{user.name.capitalize()}}</h4> (<a class="login-link" href="/logout">Logout</a>)
       <br>
       <a class="newpost-link" href="/blog/newpost">NewPost</a>
     {% else %}
@@ -34,14 +34,20 @@
       </div>
     </div>
   </header>
-  <section id="blog-content">
-    {% block content %}
-    {% endblock %}
+  <div class="row">
+    <section id="blog-content">
+      {% block content %}
+      {% endblock %}
     </section>
-</div>
-<footer class="blog-footer">
+  </div>
+<!-- <div>
+ <footer class="blog-footer">
   <p>Copyright Abhilash M</p>
 </footer>
+</div>
+ --> 
+</div>
+
 
 </body>
 

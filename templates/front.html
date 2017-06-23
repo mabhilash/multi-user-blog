@@ -1,28 +1,31 @@
 {% extends "base.html" %}
-
 {% block content %}
-
   {% for p in posts %}
-  <div>
-		<!-- {% if p.key().id() == deletepost %}
-		<div>
-			<p> Post deleted successufully</p>
-		</div>
-		{% else %}
- -->		<a href="/blog/{{p.key().id()}}">{{p.subject}}</a>
-		<br>	
-		{{p.content}}
+  <div class="blog-page col-md-8">
+  <div class="row">
+  	<div class="blog-subject col-md-8">
+  		<a href="/blog/{{p.key().id()}}">{{p.subject.capitalize()}}</a>
+  		<p>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="blog-content  col-md-12">
+  		{{p.content}}
+  	</div>
+  </div>
+ </div>
 
-<!-- 		{% endif %}
- -->		<!-- <a href="/blog/{{p.key().id()}}">{{p.subject}}</a>
-		<br>	
-		{{p.content}} -->
-</div>
-  	<!-- {% if p.key().id() %}
-    {{ p.render() | safe }}
-    {%endif%}
- -->    <br><br>
- <div>
+
+
+
+
+ <!--  <div>
+	<a href="/blog/{{p.key().id()}}">{{p.subject}}</a>
+	<br>	
+	{{p.content}}
+  </div>
+  	    <br><br>
+ --> <div>
  	{{err_msg}}
  </div>
   {% endfor %}
