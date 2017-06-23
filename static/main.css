@@ -22,7 +22,7 @@ body {
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: green;
+    color: green;
     text-align: right;
 
 
@@ -54,6 +54,8 @@ body {
     margin-right: 10px;
     margin-left: 10px;
 }
+
+
 
 .login-area {
     font-size: 14px;
@@ -99,9 +101,12 @@ h2 {
     color: red;
 }
 
+.signup-form{
+    width: 250px;
+}
 label {
   display: block;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 label + label {
