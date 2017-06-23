@@ -1,55 +1,51 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.css">
-  <link type="text/css" rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="/static/main.css" />
-  <title>Multi-User Blog</title>
-</head>
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/main.css" />
+    <title>Multi-User Blog</title>
+  </head>
 
-<body>
-<div class="container">
-  <header class="blog-header">
-    <div class="row">
-       <h2><a href="/blog">Udacity Multi-Blog</a></h2>
-    </div>
-    <div>
-      <hr>
-    </div>
-    <div class="row">
-      <div class="login-area">
-        {% if user %}
-      <h4>Welcome {{user.name.capitalize()}}</h4> (<a class="login-link" href="/logout">Logout</a>)
-      <br>
-      <a class="newpost-link" href="/blog/newpost">NewPost</a>
-    {% else %}
-      <a class="login-link" href="/login">Login</a>
-      |
-      <a class="login-link" href="/signup">SignUp</a>
-    {% endif %}
+  <body>
+  <div class="container">
+    <header class="blog-header">
+      <div class="row">
+         <h2><a href="/blog">Udacity Multi-Blog</a></h2>
       </div>
+      <div>
+        <hr>
+      </div>
+      <div class="row">
+        <div class="login-area">
+          {% if user %}
+        <h4>Welcome {{user.name.capitalize()}}</h4> (<a class="login-link" href="/logout">Logout</a>)
+        <br>
+        <a class="newpost-link" href="/blog/newpost">NewPost</a>
+      {% else %}
+        <a class="login-link" href="/login">Login</a>
+        |
+        <a class="login-link" href="/signup">SignUp</a>
+      {% endif %}
+        </div>
+      </div>
+    </header>
+    <div class="row">
+      <section id="blog-content">
+        {% block content %}
+        {% endblock %}
+      </section>
     </div>
-  </header>
-  <div class="row">
-    <section id="blog-content">
-      {% block content %}
-      {% endblock %}
-    </section>
+  <div>
+   <footer class="blog-footer">
+    <p>Developed by Abhilash M</p>
+  </footer>
   </div>
-<!-- <div>
- <footer class="blog-footer">
-  <p>Copyright Abhilash M</p>
-</footer>
-</div>
- --> 
-</div>
-
-
-</body>
-
+  </div>
+ </body>
 </html>
 
