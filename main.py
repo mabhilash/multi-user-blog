@@ -182,9 +182,12 @@ class CommentPost(BlogHandler):
         key=db.Key.from_path('Post', int(post_id), parent = blog_key())
         post=db.get(key)
         if self.user:
-            c=Comment(parent=blog_key(), user_id=self.user.key().id(), post_id=post_id, comment=self.request.get('comment'))
-            c.put()
-            self.redirect('/blog/'+post_id)
+            if self.request.get('comment'):
+                c=Comment(parent=blog_key(),user_name=self.user.name, user_id=self.user.key().id(), post_id=post_id, comment=self.request.get('comment'))
+                c.put()
+                self.redirect('/blog/'+post_id)
+            else:
+                self.redirect('/blog/'+post_id+'?error=Enter a comment to submit')
         else:
             self.redirect('/blog/'+post_id+'?error=You need to login to commment')
 
@@ -195,83 +198,23 @@ class PostPage(BlogHandler):
         post = db.get(key)
         #self.response.write(post.key().id())
         likesKey=Likes.all().filter('post_id =',post_id).count()
-        comments= Comment.all().filter('post_id=',post_id)
-        self.response.write(comments)
+        comments= Comment.all().filter('post_id =',post_id)
         if not post:
             self.error(404)
             return
         error=self.request.get('error')
         self.render("permalink.html", post = post, numLikes=likesKey, comments=comments, error=error)
-    # def post(self,post_id):
-    #     key=db.Key.from_path('Post', int(post_id), parent = blog_key())
-    #     post=db.get(key)
-    #     if self.user:
-    #         if(self.request.get('comment')):
-    #             c=Comment(parent=blog_key(), user_id=self.user.key().id(), post_id=post_id, comment=self.request.get('comment'))
-    #             c.put()
-    #             self.redirect('/blog/'+post_id)
-    #             comments= Comment.all().filter('post_id=',post_id)
-    #     else:
-    #         self.redirect('/blog/'+post_id+'?error=You need to login to comment')
-
-    
-# class PostPage(BlogHandler):
-#     def get(self, post_id):
-#         key = db.Key.from_path('Post', int(post_id), parent=blog_key())
-#         post = db.get(key)
-#         #self.response.write(post.key().id())
-#         likesKey=Likes.all().filter('post_id =',post_id).count()
-#         comments=Comment.all().filter('post_id=',post_id)
-#         if not post:
-#             self.error(404)
-#             return
-#         error=self.request.get('error')
-#         self.render("permalink.html", post = post, numLikes=likesKey, comments= comments,error=error)
-#     def post(self, post_id):
-#         key=db.Key.from_path('Post', int(post_id), parent = blog_key())
-#         post = db.get(key)
-#         c=""
-#         if self.user:
-#             if(self.request.get('like') and self.request.get('like') == 'btnLike'):
-#                 if post.user_id == self.user.key().id():
-#                     err_msg = 'You cannot like your own post'
-#                     self.render('permalink.html', post=post, err_msg = err_msg)
-#                 else:
-#                     like_post = Likes.all().filter('user_id =', self.user.key().id()).filter('post_id =', post_id).get()
-#                     if like_post:
-#                         liked_msg='You already liked the message'
-#                         self.redirect("/blog/" + post_id +
-#                                   "?error=You already liked the " +
-#                                   "post.!!")
-#                     else:
-#                         like_post = Likes(parent = blog_key(), user_id=self.user.key().id(), post_id = post_id)
-#                         like_post.put();
-#                         likesKey=Likes.all().filter('post_id =',post_id).count()
-#                         #likesKey=db.GqlQuery('SELECT * FROM Likes where post_id=%s' %post_id)
-#                         #self.response.write(post_id)
-#                         self.render('permalink.html', post= post, numLikes=likesKey)
-#             if(self.request.get('comment')):
-#                 c=Comment(parent=blog_key(), user_id=self.user.key().id(), post_id=post_id, comment=self.request.get('comment'))
-#                 c.put()
-#                 comments= Comment.all().filter('post_id=',post_id)
-#                 comment=db.get(comments)
-#                 self.response.write(comments)
-#                 likesKey=Likes.all().filter('post_id =',post_id).count()
-#                 self.render('permalink.html', post= post, comments=comments, numLikes= likesKey)
-
-                    
-#         else:
-#             login_msg='You need to login to like the post'
-#             self.render('permalink.html', post= post, no_login=login_msg)
-
-#         # comments= Comment.all().filter('post_id=', post_id)
-#         # comment=db.get(comments)
-#         # likesKey=Likes.all().filter('post_id =',post_id).count()
-
-#         # self.render('permalink.html', post= post, comments=comment, numLikes= likesKey,err_msg=err_msg)
-
-
-#         #self.response.write(self.user.key().id())
+    def post(self,post_id):
+        key=db.Key.from_path('Post', int(post_id), parent = blog_key())
+        post=db.get(key)
+        if self.user:
+            if(self.request.get('comment')):
+                c=Comment(parent=blog_key(),user_name=self.user.name, user_id=self.user.key().id(), post_id=post_id, comment=self.request.get('comment'))
+                c.put()
+                self.redirect('/blog/'+post_id)
+                comments= Comment.all().filter('post_id =',post_id)
+        else:
+            self.redirect('/blog/'+post_id+'?error=You need to login to comment')
 
 class NewPost(BlogHandler):
     def get(self):
@@ -345,10 +288,6 @@ class Signup(BlogHandler):
     def done(self, *a, **kw):
         raise NotImplementedError
 
-# class Unit2Signup(Signup):
-#     def done(self):
-#         self.redirect('/unit2/welcome?username=' + self.username)
-
 class Register(Signup):
     def done(self):
         #make sure the user doesn't already exist
@@ -385,21 +324,6 @@ class Logout(BlogHandler):
         self.logout()
         self.redirect('/blog')
 
-# class Unit3Welcome(BlogHandler):
-#     def get(self):
-#         if self.user:
-#             self.render('welcome.html', username = self.user.name)
-#         else:
-#             self.redirect('/signup')
-
-# class Welcome(BlogHandler):
-#     def get(self):
-#         username = self.request.get('username')
-#         if valid_username(username):
-#             self.render('welcome.html', username = username)
-#         else:
-#             self.redirect('/unit2/signup')
-
 class EditPost(BlogHandler):
     def get(self, post_id):
         if self.user:
@@ -409,11 +333,12 @@ class EditPost(BlogHandler):
                 self.render('editpost.html', subject= post.subject, content= post.content)
             else:
                 permission_denied='You do not have permission to edit the record'
-                self.render('permalink.html',post=post, permission_denied= permission_denied)
+                self.redirect('/blog/'+post_id+'?error=You do not have permission to edit the post')
+                #self.render('permalink.html',post=post, permission_denied= permission_denied)
                 #self.write('You do not have permission to edit the post')
         else:
-            no_login='You need to login to edit this post'
-            self.render('permalink.html', no_login= no_login)
+            self.redirect('/blog/'+post_id+'?error=You need to login to edit the post')
+            #self.render('permalink.html', no_login= no_login, post=post)
 
     def post(self,post_id):
         subject=self.request.get('subject')
@@ -440,12 +365,50 @@ class DeletePost(BlogHandler):
                 #self.redirect("/?deleteid="+post_id)
                 #self.redirect('/blog/?%s' %deletepost)
                 #self.render('front.html', deletepost = deletepost)
-                
             else:
-                del_permsn='You do not have accees to deete this post'
-                self.render('permalink.html',post=del_post, del_prmsn=del_permsn)
+                del_permsn='You do not have accees to delete this post'
+                self.redirect('/blog/'+post_id+'?error=%s' %del_permsn)
+                #self.render('permalink.html',post=del_post, del_prmsn=del_permsn)
+        else:
+            no_login='You need to login to delete the post'
+            self.redirect('/blog/'+post_id+'?error=%s' %no_login)
 
 
+
+class DeleteComment(BlogHandler):
+    def get(self,post_id,comment_id):
+        key=db.Key.from_path('Comment', int(comment_id), parent=blog_key())
+        comment=db.get(key)
+        if self.user:
+            if comment.user_id == self.user.key().id():
+                comment.delete()
+                self.redirect('/blog/'+post_id+'?error=Comment has been deleted')
+            else:
+                self.redirect('/blog/'+post_id+'?error=You cannot delete this comment')
+        else:
+            self.redirect('/blog/'+post_id+'?error=Please login to delete the comment')
+
+
+class EditComment(BlogHandler):
+    def get(self, post_id, comment_id):
+        if self.user:
+            key=db.Key.from_path('Comment', int(comment_id), parent= blog_key())
+            cmnt=db.get(key)
+            if cmnt.user_id == self.user.key().id():
+                self.render('editcomment.html', editcomment= cmnt.comment)
+            else:
+                self.redirect('/blog/'+post_id+'?error=You do not have permission to edit the comment')
+        else:
+            self.redirect('/blog/'+post_id+'?error=You need to login to edit the comment')
+    def post(self, post_id, comment_id):
+        if self.request.get('comment'):
+            key=db.Key.from_path('Comment', int(comment_id), parent= blog_key())
+            comment=db.get(key)
+            comment.comment=self.request.get('comment')
+            comment.put()
+            self.redirect('/blog/'+post_id)
+        else:
+            self.redirect('/blog/'+post_id+'/'+comment_id+'?error=Enter a comment')
 
 app = webapp2.WSGIApplication([('/', MainPage),
 #                               ('/unit2/signup', Unit2Signup),
@@ -460,6 +423,8 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                ('/blog/edit/([0-9]+)', EditPost),
                                ('/blog/delete/([0-9]+)', DeletePost),
                                ('/blog/like/([0-9]+)',LikePost),
-                               ('/blog/comment/([0-9]+)',CommentPost)
+                               ('/blog/comment/([0-9]+)',CommentPost),
+                               ('/blog/deletecomment/([0-9]+)/([0-9]+)',DeleteComment),
+                               ('/blog/editcomment/([0-9]+)/([0-9]+)',EditComment)
                                ],
                               debug=True)
