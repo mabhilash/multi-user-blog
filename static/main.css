@@ -27,14 +27,37 @@ body {
 
 
 }
+
+.comment-section{
+
+}
+
+.blog-page{
+    max-width: 100%
+    padding:30px;
+}
+
+.blog-subject{
+    font-size: 24px;
+    padding: 10px;
+    border: 10px;
+}
+
+.blog-content{
+    font-size: 18px;
+}
 .blog-header{
     color: #333;
     font-size: 20px;
 }
+.edit-button{
+    margin-right: 10px;
+    margin-left: 10px;
+}
 
 .login-area {
     font-size: 14px;
-    color: red;
+    color: green;
     position: absolute;
     top: 10px;
     right: 10px;
@@ -69,6 +92,7 @@ h2 {
 
 .error {
     color: red;
+    text-align: center;
 }
 
 .err_form{
