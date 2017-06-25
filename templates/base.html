@@ -25,12 +25,13 @@
           {% if user %}
         <h4>Welcome {{user.name.capitalize()}}</h4> (<a class="login-link" href="/logout">Logout</a>)
         <br>
-        <a class="newpost-link" href="/blog/newpost">NewPost</a>
+        <!-- <a class="newpost-link" href="/blog/newpost">NewPost</a> -->
       {% else %}
         <a class="login-link" href="/login">Login</a>
         |
         <a class="login-link" href="/signup">SignUp</a>
       {% endif %}
+      <a class="newpost-link" href="/blog/newpost">NewPost</a>
         </div>
       </div>
     </header>
