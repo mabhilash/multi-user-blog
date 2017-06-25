@@ -13,6 +13,7 @@ Steps to run the project:
    3) To run on local machine, Run the webserver using the command ' dev_appserver.py . '
    4) The project is run on particular port. Enter 'localhost:[portnumber]' on your browser view the project.
 
+The project is available at URL: https://multi-user-blog-171611.appspot.com
 
 To setup Google App engine visit the below links.
 
