@@ -341,7 +341,7 @@ class DeleteComment(BlogHandler):
         key = db.Key.from_path('Comment', int(comment_id), parent=blog_key())
         comment = db.get(key)
         if self.user:
-            if comment.comment and comment.user_id == self.user.key().id():
+            if comment and comment.user_id == self.user.key().id():
                 comment.delete()
                 error = 'Comment has been deleted'
                 return self.redirect('/blog/'+post_id+'?error=%s' % error)
@@ -374,7 +374,7 @@ class EditComment(BlogHandler):
                                    parent=blog_key())
             comment = db.get(key)
             if self.user:
-                if comment.user_id == self.user.key().id():
+                if comment and comment.user_id == self.user.key().id():
                     comment.comment = self.request.get('comment')
                     comment.put()
                     return self.redirect('/blog/'+post_id)
